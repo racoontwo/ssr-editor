@@ -2,8 +2,31 @@ Created .env-file for environment and getting a port to run.
 const port = process.env.PORT || 3000;
 restarted the database using bash db/reset_db.bash 
 
-in views/doc - changed
+in views/doc - fastnade lite på TypeError för doc.title, och försökte lösa det.
+
 <input type="text" name="title" value="<%= doc.title %>" />
 to
 <input type="text" name="title" value=<%= doc.title %> />
 
+Felsökte varför inte docs-formuläret kom upp. Insåg att det inte fanns någon länk till det.
+Skapade länk och fick upp formuläret, men undrade över varför det stod "Uppdatera" och inte "Skapa." 
+
+Identifierade att det behövdes ett formulär för att skapa dokument och senare en route för att uppdatera dokumenten.
+
+
+
+
+
+
+<%- include('includes/header'); %>
+    <h2>Dokument</h2>
+    <form method="POST" action="/" class="new-doc">
+        <label for="title">Titel</label>
+        <input type="text" name="title" value=<%= doc.title %> />
+
+        <label for="content">Innehåll</label>
+        <textarea name="content"><%= doc.content %></textarea>
+
+        <input type="submit" value="Uppdatera" />
+    </form>
+<%- include('includes/footer'); %>
