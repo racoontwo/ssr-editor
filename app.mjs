@@ -1,5 +1,7 @@
 import 'dotenv/config'
 
+//testar att lägga till en kommentar 
+
 const port = process.env.PORT || 3000;
 
 
