@@ -13,8 +13,11 @@ Skapade länk och fick upp formuläret, men undrade över varför det stod "Uppd
 
 Identifierade att det behövdes ett formulär för att skapa dokument och senare en route för att uppdatera dokumenten.
 
+Skapade ett formulär i index som kopplar till databasen.
 
+Sliceade uppdateringen för att få till rowid.
 
+Löste inte problemet så det blev det enklare.
 
 
 
