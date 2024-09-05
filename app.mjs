@@ -45,6 +45,12 @@ app.get('/', async (req, res) => {
     return res.render("index", { docs: await documents.getAll() });
 });
 
+app.get('/doc', async (req, res) => {
+    // const result = await documents.addOne(req.body);
+    return res.render("doc");
+
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 });
