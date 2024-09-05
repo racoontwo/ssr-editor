@@ -1,0 +1,9 @@
+Created .env-file for environment and getting a port to run.
+const port = process.env.PORT || 3000;
+restarted the database using bash db/reset_db.bash 
+
+in views/doc - changed
+<input type="text" name="title" value="<%= doc.title %>" />
+to
+<input type="text" name="title" value=<%= doc.title %> />
+
