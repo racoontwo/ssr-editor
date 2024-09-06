@@ -29,9 +29,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post("/", async (req, res) => {
     const result = await documents.addOne(req.body);
+    
 
     return res.redirect(`/${result.lastID}`);
 });
+
+app.post("/update", async (req, res) => {
+    const result = await documents.update(req.body);
+
+    return res.render("index", { docs: await documents.getAll() });
+});
+
 
 app.get('/:id', async (req, res) => {
     return res.render(
