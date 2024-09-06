@@ -8,6 +8,9 @@
         <textarea name="content"><%= doc.content %></textarea>
 
         <input type="hidden" name="rowid" value=<%= doc.rowid %>/>
+        <input type="hidden" name="timestamp" value=<%= doc.created_at%>/>
+
+        <p><strong>Skapad</strong> <%= doc.created_at %></p>
 
         <input type="submit" value="Uppdatera" />
     </form>

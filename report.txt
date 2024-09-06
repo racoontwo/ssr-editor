@@ -2,22 +2,22 @@ Created .env-file for environment and getting a port to run.
 const port = process.env.PORT || 3000;
 restarted the database using bash db/reset_db.bash 
 
-in views/doc - fastnade lite på TypeError för doc.title, och försökte lösa det.
-
-<input type="text" name="title" value="<%= doc.title %>" />
-to
-<input type="text" name="title" value=<%= doc.title %> />
-
 Felsökte varför inte docs-formuläret kom upp. Insåg att det inte fanns någon länk till det.
 Skapade länk och fick upp formuläret, men undrade över varför det stod "Uppdatera" och inte "Skapa." 
 
 Identifierade att det behövdes ett formulär för att skapa dokument och senare en route för att uppdatera dokumenten.
 
 Skapade ett formulär i index som kopplar till databasen.
+Till det användes funktionen addOne för att lägga till i databasen.
 
+Utgick sen från uppdateringsformuläret för att bygga en till route för postuppdatera.
+
+Ändrade lite i getOne-funktionen för att också hämta rowid tillsammans med title och content.
 Sliceade uppdateringen för att få till rowid.
 
 Löste inte problemet så det blev det enklare.
+
+
 
 
 
