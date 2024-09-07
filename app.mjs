@@ -36,8 +36,10 @@ app.post("/", async (req, res) => {
 
 app.post("/update", async (req, res) => {
     const result = await documents.update(req.body);
-
-    return res.render("index", { docs: await documents.getAll() });
+    return res.render(
+        "doc",
+        { doc: await documents.getOne(req.body.rowid.slice(0, -1)) }
+    );
 });
 
 
