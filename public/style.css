@@ -40,6 +40,12 @@ header {
     background-color: #0074D9;
     color: #fff;
     padding: 1.4rem 3rem;
+    text-decoration: none;
+}
+
+header a {
+    color: #fff;
+    text-decoration: none;
 }
 
 main {
