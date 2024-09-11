@@ -2,6 +2,6 @@
 <%- include('addDoc'); %>
     <h2>Dina dokument</h2>
     <% docs.forEach(function(doc){ %>
-        <h3><a href="/<%= doc.id %>"><%= doc.title %></a></h3>
+        <h3><a href="/docs/<%= doc.id %>"><%= doc.title %></a></h3>
     <% }); %>
 <%- include('includes/footer'); %>

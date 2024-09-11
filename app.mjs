@@ -9,6 +9,8 @@ import morgan from 'morgan';
 import cors from 'cors';
 
 import documents from "./docs.mjs";
+import mumin from "./mumin.mjs";
+
 
 const app = express();
 
@@ -42,15 +44,31 @@ app.post("/update", async (req, res) => {
 });
 
 
-app.get('/json', async (req, res) => {
-    res.json({
-        data: {
-            docs: await documents.getAll()
-        }
-    });
+app.get('/json', async (req, response) => {
+    try {
+        let res = await mumin.fetchData();
+
+        response.json(res);
+    } catch (err) {
+        console.error(err);
+        response.status(500).json({ error: 'An error occurred while fetching data.' });
+    }
 });
 
-app.get('/:id', async (req, res) => {
+// Return a JSON object with list of all documents within the collection.
+app.get("/list", async (request, response) => {
+    try {
+        let res = await mumin.fetchData();
+
+        console.log(res);
+        response.json(res);
+    } catch (err) {
+        console.log(err);
+        response.json(err);
+    }
+});
+
+app.get('/docs/:id', async (req, res) => {
     return res.render(
         "doc",
         { doc: await documents.getOne(req.params.id) }
@@ -65,3 +83,4 @@ app.get('/', async (req, res) => {
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 });
+
