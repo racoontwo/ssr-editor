@@ -1,13 +1,18 @@
-Byt ut från en SQLite databas till MongoDB för backend. Och gör om så API:t svarar med JSON-data istället för olika vyer.
-Implementera frontenden med samma funktionalitet som i den befintliga appen fast i ett JavaScript ramverk. Frontend bör skapas som en fristående SPA.
-Implementera tester för att säkerställa funktionalitet under tiden ni gör refaktorering.
-Skapa en CI-kedja med hjälp av GitHub Actions.
-Driftsätta frontenden på studentservern enligt instruktionerna och backenden samt databasen i “molnet” enligt instruktionerna.
-Lämna in länkar till de driftsatta applikationerna på Canvas, samt länk till GitHub repot.
+Händelseförlopp: 
 
-Redovisning
-Svara på nedanstående frågor individuellt och lämna in på Canvas. Lämna in tillsammans med länken till ert gemensamma GitHub-repo och länkarna till de driftsatta applikationerna.
-Vad är din initiala upplevelse av dokument-orienterade databaser kontra relationsdatabaser?
-Vilka lärdomar har du gjort kring refaktorering och vilka strategier tycker du fungerar bra?
-Vilka fördelar och nackdelar ser du med JavaScript ramverken för frontend?
-Vilka fördelar och nackdelar ser du med arbetssättet GitHub Flow nu efter att ni jobbat lite mer på riktigt?
+Skapade muminbase.mjs & mumin.mjs.
+
+db/mongodb/server.js - körde node db/mongodb/server.js för att se om det gick att nå databasen från server.js, det gick.
+
+Nästa steg var att bara klistra in det som behövdes i server.js in i app.mjs och se om man kunde
+nå databasen därifrån. det var bland annat findInCollection, lite mongo importer högst upp samt att skapa en route liknande den i server.js
+som hette /list.
+
+Kunde nå databasen från app.mjs, därifrån flyttade jag ut funktionaliteten i olika moduler, dvs: mumin.mjs och muminbase.mjs
+Först var det allt in i mumin.mjs, sen när det fungerade därifrån så flyttade jag ut funktionaliteten för uppkopplingen till databsen till muminbase.mjs.
+
+Sen blev det att snurra runt en hel del innan det kom fram att "collectionName" inte är "mumin" utan "crowd."
+Detta kom fram efter att ha kikat på argumenten till findInCollection(dsn, "crowd", {}, {}) osv.
+
+
+
