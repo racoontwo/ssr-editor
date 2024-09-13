@@ -1,6 +1,7 @@
 import 'dotenv/config'
 
-const port = process.env.PORT || 3000;
+
+const port = process.env.PORT || 3001;
 
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -26,6 +27,11 @@ if (process.env.NODE_ENV !== 'test') {
     app.use(morgan('combined')); // 'combined' outputs the Apache style LOGs
 }
 
+app.use(cors({
+    origin: 'http://localhost:3000'
+}));
+
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -44,27 +50,29 @@ app.post("/update", async (req, res) => {
 });
 
 
-app.get('/json', async (req, response) => {
+app.get('/json', async (req, res) => {
     try {
-        let res = await mumin.fetchData();
-
-        response.json(res);
+        const data = await mumin.fetchData();
+        console.log(data);
+        res.json({ data });  // Wrapping the data in a JSON object
     } catch (err) {
         console.error(err);
-        response.status(500).json({ error: 'An error occurred while fetching data.' });
+        res.status(500).json({ error: 'An error occurred while fetching data.' });
     }
 });
 
-// Return a JSON object with list of all documents within the collection.
-app.get("/list", async (request, response) => {
-    try {
-        let res = await mumin.fetchData();
 
-        console.log(res);
-        response.json(res);
-    } catch (err) {
-        console.log(err);
-        response.json(err);
+app.post('/add_mumin', async (req, res) => {
+    const { namn, bor } = req.body;
+    if (!namn || !bor) {
+        return res.status(400).json({ error: 'Name and location are required' });
+    }
+
+    try {
+        const result = await mumin.addOne({ namn, bor });
+        res.json({ message: 'Data received and inserted', data: { namn, bor }, result });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to insert data into database' });
     }
 });
 
