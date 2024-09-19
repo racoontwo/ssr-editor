@@ -11,6 +11,10 @@ import cors from 'cors';
 
 import documents from "./docs.mjs";
 import mumin from "./mumin.mjs";
+import mongodocs from "./documents.mjs";
+import ObjectId from 'mongodb';
+
+
 
 
 const app = express();
@@ -52,7 +56,8 @@ app.post("/update", async (req, res) => {
 
 app.get('/json', async (req, res) => {
     try {
-        const data = await mumin.fetchData();
+        // const data = await mumin.fetchData();
+        const data = await mongodocs.fetchData();
         console.log(data);
         res.json({ data });  // Wrapping the data in a JSON object
     } catch (err) {
@@ -62,15 +67,32 @@ app.get('/json', async (req, res) => {
 });
 
 
-app.post('/add_mumin', async (req, res) => {
-    const { namn, bor } = req.body;
-    if (!namn || !bor) {
+app.post('/add_docs', async (req, res) => {
+    const { title, content } = req.body;
+    if (!title || !content) {
         return res.status(400).json({ error: 'Name and location are required' });
     }
 
     try {
-        const result = await mumin.addOne({ namn, bor });
-        res.json({ message: 'Data received and inserted', data: { namn, bor }, result });
+        const result = await mongodocs.addOne({ title, content });
+        res.json({ message: 'Data received and inserted', data: { title, content }, result });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to insert data into database' });
+    }
+});
+
+
+app.post('/update_docs', async (req, res) => {
+    const { _id, title, content } = req.body;
+    if (!title || !content) {
+        return res.status(400).json({ error: 'Name and location are required' });
+    }
+    console.log(req.body);
+    console.log(_id, title, content);
+
+    try {
+        const result = await mongodocs.updateDocs({ _id, title, content });
+        res.json({ message: 'Data received and inserted', data: { _id, title, content }, result });
     } catch (error) {
         res.status(500).json({ error: 'Failed to insert data into database' });
     }
@@ -82,6 +104,14 @@ app.get('/docs/:id', async (req, res) => {
         { doc: await documents.getOne(req.params.id) }
     );
 });
+
+
+// app.get('/docs/:id', async (req, res) => {
+//     return res.render(
+//         "doc",
+//         { doc: await documents.getOne(req.params.id) }
+//     );
+// });
 
 app.get('/', async (req, res) => {
     return res.render("index", { docs: await documents.getAll() });
