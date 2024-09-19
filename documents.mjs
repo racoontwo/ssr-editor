@@ -1,5 +1,5 @@
 import database from "./db/mongodb/ssr_base.mjs"
-import ObjectId from 'mongodb';
+import { ObjectId } from 'mongodb';
 
 const docs = {
     fetchData: async function fetchData() {
@@ -20,25 +20,22 @@ const docs = {
             throw new Error('Database insertion failed');
         }
     },
-    updateDocs: async function updateDocs({ docs_id, docstitle, docscontent }) {
-        console.log("Hej h'r r backend")
-        console.log(docs_id, docstitle, docscontent);
-
+    updateDocs: async function updateDocs(body) {
         try {
             const db = await database.getDb();
-            const filter = { _id: ObjectId(docs_id) };
+            const filter = { _id: new ObjectId(body._id) };
             const updateDocument = {
-                title: docstitle,
-                content: docscontent
+                $set: {
+                    title: body.title,
+                    content: body.content
+                }
             };
-    
-            const result = await db.collection.updateOne({
+
+            const result = await db.collection.updateOne(
                 filter,
                 updateDocument
-            }
             );
             await db.client.close();
-            console.log(result);
             return result;
         } catch (error) {
             console.error('Error inserting data into MongoDB:', error);

@@ -83,16 +83,15 @@ app.post('/add_docs', async (req, res) => {
 
 
 app.post('/update_docs', async (req, res) => {
-    const { _id, title, content } = req.body;
-    if (!title || !content) {
+    if (!req.body) {
         return res.status(400).json({ error: 'Name and location are required' });
     }
-    console.log(req.body);
-    console.log(_id, title, content);
 
     try {
-        const result = await mongodocs.updateDocs({ _id, title, content });
-        res.json({ message: 'Data received and inserted', data: { _id, title, content }, result });
+        // const result = await mongodocs.updateDocs({ _id, title, content, message });
+        const result = await mongodocs.updateDocs(req.body);
+        // res.json({ message: 'Data received and inserted', data: { _id, title, content }, result });
+        res.json({ message: 'Data received and inserted', data: req.body, result });
     } catch (error) {
         res.status(500).json({ error: 'Failed to insert data into database' });
     }
@@ -105,13 +104,6 @@ app.get('/docs/:id', async (req, res) => {
     );
 });
 
-
-// app.get('/docs/:id', async (req, res) => {
-//     return res.render(
-//         "doc",
-//         { doc: await documents.getOne(req.params.id) }
-//     );
-// });
 
 app.get('/', async (req, res) => {
     return res.render("index", { docs: await documents.getAll() });
