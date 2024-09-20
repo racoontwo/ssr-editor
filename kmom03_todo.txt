@@ -14,5 +14,11 @@ Först var det allt in i mumin.mjs, sen när det fungerade därifrån så flytta
 Sen blev det att snurra runt en hel del innan det kom fram att "collectionName" inte är "mumin" utan "crowd."
 Detta kom fram efter att ha kikat på argumenten till findInCollection(dsn, "crowd", {}, {}) osv.
 
+- Börja ta en halvtimme att kommentera vad all kod gör. delar upp det mest för vår egna skull att
+ha koll på vad grejerna gör.
 
+Börja skriva typ 1-2 tester bara för att komma igång
 
+Efter lunch: Skapa en CI-kedja med hjälp av GitHub Actions.
+
+1&2 från kravspecen är klar.
