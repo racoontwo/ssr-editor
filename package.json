@@ -4,13 +4,14 @@
   "description": "Starter project for DV1677 JSRamverk",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.mjs"
+    "start": "nodemon app.mjs",
+    "test": "mocha"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chai": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
@@ -18,7 +19,11 @@
     "mongodb": "^6.8.1",
     "morgan": "^1.10.0",
     "sqlite": "^5.1.1",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^5.1.7",
+    "supertest": "^7.0.0"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "mocha": "^10.7.3"
+  }
 }
