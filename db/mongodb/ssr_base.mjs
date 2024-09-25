@@ -4,7 +4,8 @@ const collectionName = "documents";
 
 const database = {
     async getDb() {
-        let dsn = `mongodb://localhost:27017/ssr-editor`;
+        // let dsn = `mongodb://localhost:27017/ssr-editor`;
+        let dsn = `mongodb+srv://${process.env.ATLAS_USERNAME}:${process.env.ATLAS_PASSWORD}@jsramverk.doxe7.mongodb.net/?retryWrites=true&w=majority&appName=JSRamverk`;
 
         if (process.env.NODE_ENV === 'test') {
             dsn = "mongodb://localhost:27017/test";
