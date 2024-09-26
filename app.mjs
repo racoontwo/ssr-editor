@@ -21,7 +21,9 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 app.use(cors({
-    origin: 'http://localhost:3000'
+    // origin: 'http://localhost:3000'
+    origin: 'https://www.student.bth.se/~olrs23/editor/'
+    // origin: 'https://www.student.bth.se'
 }));
 
 app.use(bodyParser.json());
