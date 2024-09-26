@@ -20,11 +20,12 @@ if (process.env.NODE_ENV !== 'test') {
     app.use(morgan('combined'));
 }
 
-app.use(cors({
-    // origin: 'http://localhost:3000'
-    origin: 'https://www.student.bth.se/~olrs23/editor/'
-    // origin: 'https://www.student.bth.se'
-}));
+// app.use(cors({
+//     // origin: 'http://localhost:3000'
+//     // origin: 'https://www.student.bth.se/~olrs23/editor/'
+// }));
+
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

@@ -22,3 +22,12 @@ Börja skriva typ 1-2 tester bara för att komma igång
 Efter lunch: Skapa en CI-kedja med hjälp av GitHub Actions.
 
 1&2 från kravspecen är klar.
+
+Kolla hur useEffect kan appliceras i vår app - be chatGPT och läsa på om anvädningsområdet för useEffect.
+Snygga till css: större label och input-textruta, kanske lägger det i mitten och fixar till knappar.
+Allmänt se över layouten och placering för dokumentet.
+Se till att uppdatera CORS så att säkerheten blir större.
+Kika på CI-kedjan
+Titta på tester, skriva några fler tester.
+Se över vilka delar vi har tester för - titta på Emils föreläsning om tester.
+Statiskt kodvalidering - installera eslint så att saker blir snygga.

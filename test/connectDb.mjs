@@ -1,4 +1,4 @@
-// process.env.NODE_ENV = 'test'; 
+process.env.NODE_ENV = 'test';
 
 import { expect } from 'chai';
 import database from '../db/mongodb/ssr_base.mjs';
@@ -8,7 +8,7 @@ describe('Database Connection', () => {
         let db;
 
         try {
-            let db = await database.getDb();
+            db = await database.getDb();
             expect(db).to.not.be.null;
         } catch (error) {
             expect.fail('Failed to connect to the database');

@@ -7,7 +7,7 @@ const router = express.Router();
 // Main router used mainly to identify connection success and should return the routes available.
 router.get('/', async (req, res) => {
     res.status(201).json({ success: 'Connectivity found' });
-    // res.render('index');
+    res.render('index');
 });
 
 // Fetches all the data from all the documents in the database and returns it as a JSON-object.
@@ -26,12 +26,13 @@ router.get('/json', async (req, res) => {
 router.post('/add_docs', async (req, res) => {
     const { title, content } = req.body;
     if (!title || !content) {
-        return res.status(400).json({ error: 'Name and location are required' });
+        return res.status(400).json({ error: 'Title and content are required' });
     }
 
     try {
         const result = await mongodocs.addOne({ title, content });
-        res.json({ message: 'Data received and inserted', data: { title, content }, result });
+        // res.status(200).json({ error: 'Data received and inserted' });
+        res.status(200).json({ message: 'Data received and inserted', data: { title, content }, result });
     } catch (error) {
         res.status(500).json({ error: 'Failed to insert data into database' });
     }
