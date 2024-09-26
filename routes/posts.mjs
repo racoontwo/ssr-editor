@@ -7,6 +7,7 @@ const router = express.Router();
 // Main router used mainly to identify connection success and should return the routes available.
 router.get('/', async (req, res) => {
     res.status(201).json({ success: 'Connectivity found' });
+    // res.render('index');
 });
 
 // Fetches all the data from all the documents in the database and returns it as a JSON-object.

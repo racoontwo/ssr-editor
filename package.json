@@ -4,8 +4,9 @@
   "description": "Starter project for DV1677 JSRamverk",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app.mjs",
-    "test": "mocha"
+    "start": "node app.mjs",
+    "test": "mocha",
+    "watch": "nodemon app.mjs"
   },
   "keywords": [],
   "author": "",

@@ -1,7 +1,5 @@
 import 'dotenv/config'
 
-const port = process.env.PORT || 3001;
-
 import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
@@ -9,6 +7,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import posts from "./routes/posts.mjs";
 
+const port = process.env.PORT || 1337;
 const app = express();
 
 app.disable('x-powered-by');
@@ -28,8 +27,13 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Get all routes from routes folder
+
+app.get('/', (req, res) => {
+    res.render('index');
+});
+
 app.use("/posts", posts);
+
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
