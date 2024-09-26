@@ -37,9 +37,10 @@ app.get('/', (req, res) => {
 
 app.use("/posts", posts);
 
-
-app.listen(port, () => {
+const server = app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 });
 
-export default app
+
+export default { app, server }
+// export default app
