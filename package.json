@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node app.mjs",
     "test": "nyc mocha --exit --timeout 10000",
+    "test2": "nyc --reporter=html --reporter=text mocha",
     "watch": "nodemon app.mjs",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
@@ -33,13 +34,12 @@
   },
   "nyc": {
     "include": [
-      "app.mjs", 
-      "documents.mjs", 
-      "routes/**/*.js",
-      "db/**/*.js", 
-      "views/**/*.js"
+      "**/*.mjs"
     ],
-    "reporter": ["lcov", "text"],
+    "reporter": [
+      "lcov",
+      "text"
+    ],
     "all": true
   }
 }
