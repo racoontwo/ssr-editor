@@ -4,7 +4,7 @@ import mongodocs from "../documents.mjs";
 
 const router = express.Router();
 
-// Main router used mainly to identify connection success and should return the routes available.
+// Main router used to identify connection success.
 router.get('/', async (req, res) => {
     res.status(201).json({ success: 'Connectivity found' });
     res.render('index');
@@ -22,7 +22,6 @@ router.get('/json', async (req, res) => {
 });
 
 // This route pulls the data from a new document and adds it to the database.
-
 router.post('/add_docs', async (req, res) => {
     const { title, content } = req.body;
     if (!title || !content) {
@@ -31,34 +30,12 @@ router.post('/add_docs', async (req, res) => {
 
     try {
         const result = await mongodocs.addOne({ title, content });
-        // res.status(200).json({ error: 'Data received and inserted' });
         res.status(200).json({ message: 'Data received and inserted', data: { title, content }, result });
     } catch (error) {
         res.status(500).json({ error: 'Failed to insert data into database' });
     }
 });
 
-// router.post('/add_docs', async (req, res) => {
-//     const { title, content } = req.body;
-
-//     if (!title || !content) {
-//         return res.status(400).json({ error: 'Title and content are required' });
-//     }
-
-//     try {
-//         const existingDoc = await mongodocs.findOne({ title });
-        
-//         if (existingDoc) {
-//             return res.status(400).json({ error: 'Document with the same title already exists' });
-//         }
-
-//         // Proceed with adding the new document if no duplicate is found
-//         const result = await mongodocs.addOne({ title, content });
-//         res.json({ message: 'Data received and inserted', data: { title, content }, result });
-//     } catch (error) {
-//         res.status(500).json({ error: 'Failed to insert data into database' });
-//     }
-// }); 
 
 // This route updates the docs connecting to the database the req.body as argument.
 // Req.body should contain the _id and the rest of the data that's going to be updated

@@ -1,7 +1,9 @@
+process.env.NODE_ENV = 'test';
+
 import request from 'supertest';
 import appdata from '../app.mjs';
 
-describe('Express App', function() {
+describe('app.mjs', function() {
     after(function(done) {
         appdata.server.close(done);
     });
@@ -19,7 +21,7 @@ describe('Express App', function() {
         });
     });
 
-    describe('GET /posts', function() {
+    describe('GET /posts/json', function() {
         it('should return json-format', function(done) {
             request(appdata.app)
                 .get('/posts/json')
