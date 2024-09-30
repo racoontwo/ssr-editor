@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node app.mjs",
-    "test": "nyc mocha --exit --timeout 10000",
+    "test": "mocha --exit --timeout 10000",
     "test2": "nyc --reporter=html --reporter=text mocha",
     "watch": "nodemon app.mjs",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
