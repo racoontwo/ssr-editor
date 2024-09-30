@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node app.mjs",
     "test": "mocha --exit --timeout 10000",
-    "watch": "nodemon app.mjs"
+    "test2": "nyc --reporter=html --reporter=text mocha",
+    "watch": "nodemon app.mjs",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +28,18 @@
   },
   "type": "module",
   "devDependencies": {
-    "mocha": "^10.7.3"
+    "coveralls": "^3.1.1",
+    "mocha": "^10.7.3",
+    "nyc": "^17.1.0"
+  },
+  "nyc": {
+    "include": [
+      "**/*.mjs"
+    ],
+    "reporter": [
+      "lcov",
+      "text"
+    ],
+    "all": true
   }
 }

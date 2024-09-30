@@ -31,3 +31,16 @@ Kika på CI-kedjan
 Titta på tester, skriva några fler tester.
 Se över vilka delar vi har tester för - titta på Emils föreläsning om tester.
 Statiskt kodvalidering - installera eslint så att saker blir snygga.
+
+
+KAN KIKA PÅ
+app - 
+
+23-28
+
+// app.use(cors({
+//     // origin: 'http://localhost:3000'
+//     // origin: 'https://www.student.bth.se/~olrs23/editor/'
+// }));
+
+app.use(cors());

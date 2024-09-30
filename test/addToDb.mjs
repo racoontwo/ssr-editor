@@ -6,7 +6,7 @@ import appdata from '../app.mjs';
 
 const app = appdata.app;
 
-describe('POST /add_docs', () => {
+describe('POST document to /add_docs', () => {
     it('should add a new document when title and content are provided', async () => {
         const newDoc = {
             title: 'Test Title',
