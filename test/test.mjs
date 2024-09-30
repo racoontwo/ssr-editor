@@ -21,13 +21,3 @@ describe('app', () => {
         });
     });
 });
-
-// describe('auth', () => 
-
-
-
-// testa anslutning till db
-// testa lägga till dokument
-// uppdatera dokument
-// hämta adokument
-// skapa test-databas
