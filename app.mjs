@@ -8,7 +8,7 @@ import cors from 'cors';
 import posts from "./routes/posts.mjs";
 // import { createServer } from 'http';
 import { Server } from 'socket.io';
-
+// import { instrument } from '@socket.io/admin-ui';
 
 const port = process.env.PORT || 1337;
 const app = express();
@@ -23,20 +23,6 @@ if (process.env.NODE_ENV !== 'test') {
     app.use(morgan('combined'));
 }
 
-// const httpServer = createServer(app);
-
-// Setup Socket.IO
-// const io = new Server(server, {
-//     cors: {
-//         origin: "http://localhost:3000", // Adjust origin as needed
-//         methods: ["GET", "POST"]
-//     }
-// });
-
-// app.use(cors({
-//     // origin: 'http://localhost:3000'
-//     // origin: 'https://www.student.bth.se/~olrs23/editor/'
-// }));
 
 app.use(cors());
 
@@ -50,26 +36,6 @@ app.get('/', (req, res) => {
 
 app.use("/posts", posts);
 
-// io.on('connection', (socket) => {
-//     console.log(`A user connected: ${socket.id}`);
-    
-
-//     socket.on('frontend', (message) => {
-//         let servermessge = "hello from server";
-//         socket.emit("servermsg", servermessge);
-//         console.log(message);
-//     });
-
-//     socket.on('create', function(room) {
-//         socket.join(room);
-//     });
-
-//     // Handle disconnect
-//     socket.on('disconnect', () => {
-//         console.log(`User disconnected: ${socket.id}`);
-//     });
-// });
-
 
 const server = app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
@@ -77,8 +43,9 @@ const server = app.listen(port, () => {
 
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:3000", // Adjust origin as needed
-        methods: ["GET", "POST"]
+        origin: "http://localhost:3000",
+        // origin: ["http://localhost:3000", "http://admin.socket.io/"],
+        // methods: ["GET", "POST"]
     }
 });
 
@@ -87,6 +54,7 @@ io.on('connection', (socket) => {
     socket.on('selectedItem', (itemData) => {
         if (itemData) {
             console.log("this is the id", itemData._id);
+            socket.to(itemData._id).emit("doc", itemData);
         }
         // console.log("This is the itemData", itemData);
     });
@@ -99,17 +67,20 @@ io.on('connection', (socket) => {
         // socket.join(room);
     });
 
+    socket.on("doc", function (data) {
+        if (data._id) {
+            socket.to(data._id).emit("doc", data);
+        }
+    });
+
     // Handle disconnect
     socket.on('disconnect', () => {
         console.log(`User disconnected: ${socket.id}`);
     });
 });
 
-// httpServer.listen(port, () => {
-//     console.log(`Server is running on port ${port}`);
-// });
 
-// export default { app, httpServer };
+// instrument(io, { auth: false});
 
 export default { app, server }
 // export default app
