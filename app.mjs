@@ -44,7 +44,8 @@ const server = app.listen(port, () => {
 //Setting upp the socker.io server
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:3000",
+        // origin: "http://localhost:3000",
+        origin: "https://www.student.bth.se/~olrs23/editor/",
         // origin: ["http://localhost:3000", "http://admin.socket.io/"],
         // methods: ["GET", "POST"]
     }
