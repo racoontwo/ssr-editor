@@ -41,6 +41,7 @@ const server = app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 });
 
+//Setting upp the socker.io server
 const io = new Server(server, {
     cors: {
         origin: "http://localhost:3000",
@@ -49,12 +50,19 @@ const io = new Server(server, {
     }
 });
 
+//Handling new connections to the server
 io.on('connection', (socket) => {
     console.log(`A user connected: ${socket.id}`);
+
+    //Add client to the room when entering a document.
     socket.on('selectedItem', (itemData) => {
         if (itemData) {
-            console.log("this is the id", itemData._id);
-            socket.to(itemData._id).emit("doc", itemData);
+            const roomId = itemData._id;
+            socket.join(roomId)
+            console.log(`User ${socket.id} joined room: ${roomId}`);
+
+            // console.log("this is the id", itemData._id);
+            // socket.to(itemData._id).emit("doc", itemData);
         }
         // console.log("This is the itemData", itemData);
     });
@@ -67,9 +75,12 @@ io.on('connection', (socket) => {
         // socket.join(room);
     });
 
-    socket.on("doc", function (data) {
-        if (data._id) {
-            socket.to(data._id).emit("doc", data);
+    //Handles any changes in a document so that it is immediately reflected for all clients in the room.
+    socket.on("doc", (data) => {
+        if (data) {
+            const roomId = data._id;
+            io.to(roomId).emit('doc', data);
+            // socket.to(data._id).emit("doc", data);
         }
     });
 
