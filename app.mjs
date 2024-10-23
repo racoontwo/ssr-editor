@@ -6,12 +6,20 @@ import path from 'path';
 import morgan from 'morgan';
 import cors from 'cors';
 import posts from "./routes/posts.mjs";
-// import { createServer } from 'http';
+import RootQueryType from "./graphql/root.js";
+
 import { Server } from 'socket.io';
-// import { instrument } from '@socket.io/admin-ui';
+
+import { graphqlHTTP } from 'express-graphql';
+import { GraphQLSchema } from 'graphql';
 
 const port = process.env.PORT || 1337;
 const app = express();
+const visual = true;
+
+const schema = new GraphQLSchema({
+    query: RootQueryType
+});
 
 app.disable('x-powered-by');
 
@@ -35,6 +43,12 @@ app.get('/', (req, res) => {
 });
 
 app.use("/posts", posts);
+
+
+app.use('/graphql', graphqlHTTP({
+    schema: schema,
+    graphiql: visual, // Visual är satt till true under utveckling
+}));
 
 
 const server = app.listen(port, () => {
@@ -93,6 +107,7 @@ io.on('connection', (socket) => {
 
 
 // instrument(io, { auth: false});
+// jo dåa
 
 export default { app, server }
 // export default app
