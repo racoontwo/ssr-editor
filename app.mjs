@@ -7,9 +7,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import posts from "./routes/posts.mjs";
 import RootQueryType from "./graphql/root.js";
-
 import { Server } from 'socket.io';
-
 import { graphqlHTTP } from 'express-graphql';
 import { GraphQLSchema } from 'graphql';
 
@@ -82,14 +80,6 @@ io.on('connection', (socket) => {
         // console.log("This is the itemData", itemData);
     });
 
-    //"room" är detsamma som "item._id". blanda inte ihop med user.id
-    //this is the id 66f3d02a28bec97216e15e4f
-    //this is the room 66f3d02a28bec97216e15e4f
-    socket.on('create', function(room) {
-        console.log("this is the room", room);
-        // socket.join(room);
-    });
-
     //Handles any changes in a document so that it is immediately reflected for all clients in the room.
     socket.on("doc", (data) => {
         if (data) {
@@ -105,9 +95,4 @@ io.on('connection', (socket) => {
     });
 });
 
-
-// instrument(io, { auth: false});
-// jo dåa
-
 export default { app, server }
-// export default app
