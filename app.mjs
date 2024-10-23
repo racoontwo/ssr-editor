@@ -6,6 +6,10 @@ import path from 'path';
 import morgan from 'morgan';
 import cors from 'cors';
 import posts from "./routes/posts.mjs";
+import RootQueryType from "./graphql/root.js";
+import { Server } from 'socket.io';
+import { graphqlHTTP } from 'express-graphql';
+import { GraphQLSchema } from 'graphql';
 
 
 const port = process.env.PORT || 1337;
@@ -38,6 +42,10 @@ app.get('/', (req, res) => {
 
 app.use("/posts", posts);
 
+app.use('/graphql', graphqlHTTP({
+    schema: schema,
+    graphiql: visual, // Visual är satt till true under utveckling
+}));
 
 const server = app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
@@ -65,7 +73,6 @@ io.on('connection', (socket) => {
             socket.join(roomId)
             console.log(`User ${socket.id} joined room: ${roomId}`);
         }
-
     });
 
     //Handles any changes in a document so that it is immediately reflected for all clients in the room.
