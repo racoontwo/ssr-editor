@@ -1,9 +1,7 @@
+
 import {
     GraphQLObjectType,
-    GraphQLString,
     GraphQLList,
-    GraphQLInt,
-    GraphQLNonNull
 } from 'graphql';
 
 import documents from '../documents.mjs';

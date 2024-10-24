@@ -1,3 +1,4 @@
+
 import 'dotenv/config'
 
 import express from 'express';
@@ -11,8 +12,8 @@ import { Server } from 'socket.io';
 import { graphqlHTTP } from 'express-graphql';
 import { GraphQLSchema } from 'graphql';
 
-
-const port = process.env.PORT || 1337;
+// const port = process.env.PORT || 1337;
+const port = process.env.PORT
 const app = express();
 const visual = true;
 
