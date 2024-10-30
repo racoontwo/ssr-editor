@@ -52,4 +52,29 @@ router.post('/update_docs', async (req, res) => {
     }
 });
 
+// A route to delete all data in the database
+router.delete('/delete-all-docs', async (req, res) => {
+    try {
+        const result = await mongodocs.deleteAllDocs();
+        res.status(200).json({ message: 'All documents deleted successfully', result });
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to delete documents', error: error.message });
+    }
+});
+
+router.delete('/delete-one-doc', async (req, res) => {
+    const docId = req.body._id;
+    try {
+        const result = await mongodocs.deleteOneDoc(docId);
+        console.log(result)
+        if (result.deletedCount === 1) {
+            res.status(200).json({ message: "Document deleted successfully" });
+        } else {
+            res.status(404).json({ message: "Document not found" });
+        }
+    } catch (error) {
+        res.status(500).json({ error: "Failed to delete document" });
+    }
+});
+
 export default router;
