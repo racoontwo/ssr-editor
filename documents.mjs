@@ -41,6 +41,30 @@ const docs = {
             console.error('Error inserting data into MongoDB:', error);
             throw new Error('Database insertion failed');
         }
+    },
+
+    deleteOneDoc: async function deleteOneDoc(id) {
+        try {
+            const db = await database.getDb();
+            const result = await db.collection.deleteOne({ _id: new ObjectId(id) });
+            await db.client.close();
+            return result;
+        } catch (error) {
+            console.error('Error deleting document from MongoDB:', error);
+            throw new Error('Document deletion failed');
+        }
+    },
+
+    deleteAllDocs: async function deleteAllDocs() {
+        try {
+            const db = await database.getDb();
+            const result = await db.collection.deleteMany({});
+            await db.client.close();
+            return result;
+        } catch (error) {
+            console.error('Error deleting data from MongoDB:', error);
+            throw new Error('Database deletion failed');
+        }
     }
 };
 
