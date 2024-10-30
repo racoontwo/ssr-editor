@@ -63,16 +63,16 @@ const io = new Server(server, {
 });
 
 //så som emil gjorde i sin föreläsning
-io.on('connection', function(socket) {
-    socket.on("selecte", function (data) {
-        console.log(data);
+// io.on('connection', function(socket) {
+//     socket.on("select", function (data) {
+//         console.log(data);
 
-        io.emit("content", data);
+//         io.emit("content", data);
 
-        //spara till databas och gör annat med data
+//         //spara till databas och gör annat med data
 
-    })
-})
+//     })
+// })
 
 //Handling new connections to the server
 io.on('connection', (socket) => {
@@ -92,7 +92,6 @@ io.on('connection', (socket) => {
     socket.on("doc", (data) => {
         if (data) {
             const roomId = data._id;
-
             io.to(roomId).emit('doc', data);
         }
     });
