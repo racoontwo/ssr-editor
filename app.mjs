@@ -13,7 +13,7 @@ import { graphqlHTTP } from 'express-graphql';
 import { GraphQLSchema } from 'graphql';
 
 const port = process.env.PORT || 1337;
-// const port = process.env.PORT
+
 const app = express();
 const visual = true;
 
@@ -62,6 +62,18 @@ const io = new Server(server, {
     }
 });
 
+//så som emil gjorde i sin föreläsning
+// io.on('connection', function(socket) {
+//     socket.on("select", function (data) {
+//         console.log(data);
+
+//         io.emit("content", data);
+
+//         //spara till databas och gör annat med data
+
+//     })
+// })
+
 //Handling new connections to the server
 io.on('connection', (socket) => {
     console.log(`A user connected: ${socket.id}`);
@@ -80,7 +92,6 @@ io.on('connection', (socket) => {
     socket.on("doc", (data) => {
         if (data) {
             const roomId = data._id;
-
             io.to(roomId).emit('doc', data);
         }
     });
@@ -91,4 +102,4 @@ io.on('connection', (socket) => {
     });
 });
 
-export default { app, server }
+export default { app, server, io }
