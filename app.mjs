@@ -62,18 +62,6 @@ const io = new Server(server, {
     }
 });
 
-//så som emil gjorde i sin föreläsning
-// io.on('connection', function(socket) {
-//     socket.on("select", function (data) {
-//         console.log(data);
-
-//         io.emit("content", data);
-
-//         //spara till databas och gör annat med data
-
-//     })
-// })
-
 //Handling new connections to the server
 io.on('connection', (socket) => {
     console.log(`A user connected: ${socket.id}`);
