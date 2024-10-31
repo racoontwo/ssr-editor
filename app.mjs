@@ -80,7 +80,8 @@ io.on('connection', (socket) => {
     socket.on("doc", (data) => {
         if (data) {
             const roomId = data._id;
-            io.to(roomId).emit('doc', data);
+            // io.to(roomId).emit('doc', data);
+            socket.to(roomId).emit('doc', data);
         }
     });
 
