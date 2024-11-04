@@ -6,6 +6,7 @@ import io from '../app.mjs';
 const port = process.env.PORT || 1337;
 const testUrl = `http://localhost:${port}`;
 let clientSocket;
+let listenerSocket;
 
 describe('Socket.IO Server', function () {
     before((done) => {
@@ -30,6 +31,10 @@ describe('Socket.IO Server', function () {
         if (clientSocket.connected) {
             clientSocket.disconnect();
         }
+
+        if (listenerSocket.connected) {
+            listenerSocket.disconnect();
+        }
         
         if (io.server && io.server.listening) {
             io.server.close(done);
@@ -49,16 +54,48 @@ describe('Socket.IO Server', function () {
     it('should broadcast document changes to room clients', (done) => {
         const roomId = 'testRoom';
         const testData = { _id: roomId, content: 'Updated document content' };
-        
-        clientSocket.emit('selectedItem', { _id: roomId });
-        clientSocket.emit('doc', testData);
-
-        clientSocket.on('doc', (data) => {
+    
+        listenerSocket = Client(testUrl, {
+            reconnectionDelay: 0,
+            forceNew: true,
+            transports: ['websocket'],
+        });
+    
+        listenerSocket.on('connect', () => {
+            listenerSocket.emit('selectedItem', { _id: roomId });
+            // console.log(`Listener socket joined room: ${roomId}`);
+    
+            clientSocket.emit('selectedItem', { _id: roomId });
+            // console.log(`Client socket joined room: ${roomId}`);
+    
+            setTimeout(() => {
+                // console.log('Emitting document:', testData);
+                clientSocket.emit('doc', testData);
+            }, 100);
+        });
+    
+        listenerSocket.on('doc', (data) => {
             if (JSON.stringify(data) === JSON.stringify(testData)) {
-                done();
+            done();
             } else {
-                done(new Error('Document broadcast did not match the expected data.'));
+            done(new Error('Document broadcast did not match the expected data.'));
             }
         });
     });
+
+        // it('should broadcast document changes to room clients', (done) => {
+    //     const roomId = 'testRoom';
+    //     const testData = { _id: roomId, content: 'Updated document content' };
+        
+    //     clientSocket.emit('selectedItem', { _id: roomId });
+    //     clientSocket.emit('doc', testData);
+
+    //     clientSocket.on('doc', (data) => {
+    //         if (JSON.stringify(data) === JSON.stringify(testData)) {
+    //             done();
+    //         } else {
+    //             done(new Error('Document broadcast did not match the expected data.'));
+    //         }
+    //     });
+    // });
 });
